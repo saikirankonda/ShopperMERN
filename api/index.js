@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-
 import mongoose from "mongoose";
+import userRouter from "./routes/user.route.js";
 
 const app = express();
 
@@ -15,7 +15,6 @@ mongoose
   .catch((error) => console.log(error));
 
 const port = 3000;
+app.listen(port, () => {});
 
-app.listen(port, () => {
-  console.log("server runnning at 3000 !!!");
-});
+app.use("/api/user", userRouter);
