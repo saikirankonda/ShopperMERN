@@ -1,4 +1,4 @@
-import mangoose, { Mongoose } from "mongoose";
+import mangoose from "mongoose";
 
 const userSchema = new mangoose.Schema(
   {
@@ -20,6 +20,6 @@ const userSchema = new mangoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("User", userSchema);
+const User = mangoose.model("User", userSchema);
 
 export default User;
