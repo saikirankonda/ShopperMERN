@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 
 function SignUp() {
 
@@ -8,13 +8,17 @@ function SignUp() {
   const [error,setError] = useState(null)
   const[loading,setLoading ] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleChange =(e) =>{
      setFormdata({...formdata , [e.target.id] : e.target.value})
   }
 
+  console.log(error)
   const handleSubmit = async(e) =>{
     e.preventDefault();
-    setLoading(true)
+      try{
+            setLoading(true)
     const res = await fetch('http://localhost:3000/api/auth/singup', {
       method : 'POST',
       headers : {
@@ -25,15 +29,26 @@ function SignUp() {
     
     const data = await res.json();
     if(data?.success === false){
+      setLoading(false)     
       setError(data?.message)
-      setLoading(false)
+      return;
     }
-    else{
+    {
       setLoading(false)
-       setError(data?.message)
+       setError(null)
+       navigate("/sign-in");
     }
+        
+      }
+      catch(error)
+      {
+        setLoading(false)
+        setError(error.message)
+      }
 
-    console.log("data",data);
+
+
+
   }
   return (
     <div className='p-3 max-w-lg  mx-auto'>
